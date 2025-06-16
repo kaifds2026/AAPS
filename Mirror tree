@@ -1,0 +1,52 @@
+from collections import deque
+
+class Node:
+    def __init__(self, data):
+        self.data = data
+        self.left = None
+        self.right = None
+
+# Function to mirror the binary tree using BFS
+def mirror_tree(root):
+    if root is None:
+        return None
+
+    queue = deque()
+    queue.append(root)
+
+    while queue:
+        current = queue.popleft()
+
+        # Swap the left and right children
+        current.left, current.right = current.right, current.left
+
+        if current.left:
+            queue.append(current.left)
+        if current.right:
+            queue.append(current.right)
+
+    return root
+
+# Helper function for in-order traversal
+def inorder_traversal(root):
+    if root:
+        inorder_traversal(root.left)
+        print(root.data, end=' ')
+        inorder_traversal(root.right)
+
+root = Node(1)
+root.left = Node(2)
+root.right = Node(3)
+root.left.left = Node(4)
+root.left.right = Node(5)
+root.right.left = Node(6)
+root.right.right = Node(7)
+
+print("Inorder traversal of original tree:")
+inorder_traversal(root)
+
+# Mirror the tree
+mirror_tree(root)
+
+print("\nInorder traversal of mirrored tree:")
+inorder_traversal(root)
